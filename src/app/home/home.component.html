@@ -1,0 +1,12 @@
+<div class="container mt-2">
+  <h1 class="display-4 text-center">WPT- Analysis</h1>
+
+  <form class="mt-5" [formGroup]="wptLinkForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="exampleInputEmail1">WPT-link</label>
+      <input type="url" class="form-control" id="wpt-link" aria-describedby="wpt-link" formControlName="wptLink">
+      <small id="urlHelp" class="form-text text-muted">Please provide the wpt json result url.</small>
+    </div>
+    <button type="submit" [disabled]="!wptLinkForm.valid" class="btn btn-primary">Submit</button>
+  </form>
+</div>
