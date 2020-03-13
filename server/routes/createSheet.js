@@ -24,7 +24,7 @@ createSheet();
     await doc.useServiceAccountAuth(keys);
     await doc.loadInfo();
     console.log(doc.title);
-    const sheet = await doc.addSheet({ title: 'WPT DATA',  headerValues: ['Step', 'Miss/Hit', 'Load Time']  });
+    const sheet = await doc.addSheet({ title: 'WPT DATA',  headerValues: ['Step', 'Miss', 'loadTime']  });
     await sheet.loadCells('A1:E10');
     
     const a1 = sheet.getCell(0, 0)
@@ -33,22 +33,28 @@ createSheet();
     a1.backgroundColor = { green : 1 };
     a2.backgroundColor = { green : 1};
     a3.backgroundColor = { green : 1 };
-    const larryRow = await sheet.addRow({ name: 'Larry Page', email: 'larry@google.com' });
-const moreRows = await sheet.addRows([
-  { name: 'Sergey Brin', email: 'sergey@google.com' },
-  { name: 'Eric Schmidt', email: 'eric@google.com' },
-]);
 
-// read rows
-const rows = await sheet.getRows(); // can pass in { limit, offset }
+    const larryRow = await sheet.addRows([
+        { Step: 1 , Miss: 'Miss', loadTime : '0.1' },
+        { Step: 2 , Miss: 'Miss', loadTime : '0.1' },
+        { Step: 3 , Miss: 'Miss', loadTime : '0.1' },
+        { Step: 4 , Miss: 'Miss', loadTime : '0.1' },
+        { Step: 5 , Miss: 'Miss', loadTime : '0.1' },
+        { Step: 6 , Miss: 'Miss', loadTime : '0.1' },
+        { Step: 7 , Miss: 'Miss', loadTime : '0.1' },
+        { Step: 8 , Miss: 'Miss', loadTime : '0.1' },
+       
+      ]);
 
-// read/write row values
-console.log(rows[0].name); // 'Larry Page'
-rows[1].email = 'sergey@abc.xyz'; // update a value
-await rows[1].save(); // save updates
-await rows[1].delete(); // delete a row
+  
+
+
+
+
+
+
     
-   
+
    
     a1.textFormat = { bold: true, fontSize: 12  };
     a2.textFormat = { bold: true, fontSize: 12  };
