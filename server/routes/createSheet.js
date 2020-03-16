@@ -9,7 +9,7 @@ const keys = require('../keys.json');
 
 const doc = new GoogleSpreadsheet('1TyKraiaM7Pqwxmm2VJx2TPpkTiYdmzw9d8PalBU4iwc');
 
- router.get('/', function(req, res, next) {
+ router.post('/', function(req, res, next) {
 
 res.send(200)
 createSheet();
@@ -24,25 +24,29 @@ createSheet();
     await doc.useServiceAccountAuth(keys);
     await doc.loadInfo();
     console.log(doc.title);
-    const sheet = await doc.addSheet({ title: 'WPT DATA',  headerValues: ['Step', 'Miss', 'loadTime']  });
-    await sheet.loadCells('A1:E10');
+    const sheet = await doc.addSheet({ title: 'WPT DATA',  headerValues: ['Run','Step','Label', 'Miss', 'loadTime','thumbnailUrl']  });
+    await sheet.loadCells('A1:H10');
     
     const a1 = sheet.getCell(0, 0)
-    const a2 = sheet.getCell(0, 1)
-    const a3 = sheet.getCell(0, 2)
+    const b1 = sheet.getCell(0, 1)
+    const c1 = sheet.getCell(0, 2)
+    const d1 = sheet.getCell(0, 3)
+    const e1 = sheet.getCell(0, 4)
+    const f1 = sheet.getCell(0, 5)
+
+    //const h1 = sheet.getcell(0, 8)
     a1.backgroundColor = { green : 1 };
-    a2.backgroundColor = { green : 1};
-    a3.backgroundColor = { green : 1 };
+    b1.backgroundColor = { green : 1};
+    c1.backgroundColor = { green : 1 };
+    d1.backgroundColor = { green : 1 };
+    e1.backgroundColor = { green : 1 };
+    f1.backgroundColor = { green : 1 };
 
     const larryRow = await sheet.addRows([
-        { Step: 1 , Miss: 'Miss', loadTime : '0.1' },
-        { Step: 2 , Miss: 'Miss', loadTime : '0.1' },
-        { Step: 3 , Miss: 'Miss', loadTime : '0.1' },
-        { Step: 4 , Miss: 'Miss', loadTime : '0.1' },
-        { Step: 5 , Miss: 'Miss', loadTime : '0.1' },
-        { Step: 6 , Miss: 'Miss', loadTime : '0.1' },
-        { Step: 7 , Miss: 'Miss', loadTime : '0.1' },
-        { Step: 8 , Miss: 'Miss', loadTime : '0.1' },
+        { Run : 1, Step: 1, label: 'home' , Miss: 'no', loadTime : '0.1', thumbnailUrl: 'www.djkghsdaf.com'},
+        { Run : 1, Step: 1, label: 'home' , Miss: 'no', loadTime : '0.1', thumbnailUrl: 'www.djkghsdaf.com'},
+        { Run : 1, Step: 1, label: 'home' , Miss: 'no', loadTime : '0.1', thumbnailUrl: 'www.djkghsdaf.com'},
+        { Run : 1, Step: 1, label: 'home' , Miss: 'no', loadTime : '0.1', thumbnailUrl: 'www.djkghsdaf.com'},
        
       ]);
 
@@ -56,9 +60,12 @@ createSheet();
     
 
    
-    a1.textFormat = { bold: true, fontSize: 12  };
-    a2.textFormat = { bold: true, fontSize: 12  };
-    a3.textFormat = { bold: true, fontSize: 12  };
+    a1.textFormat = { bold: true };
+    b1.textFormat = { bold: true };
+    c1.textFormat = { bold: true };
+    d1.textFormat = { bold: true };
+    e1.textFormat = { bold: true };
+    f1.textFormat = { bold: true };
   
 
     await sheet.saveUpdatedCells();
