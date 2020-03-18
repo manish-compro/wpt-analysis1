@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators  } from '@angular/forms';
 import { ResultData } from '../resultdata.interface'
 import { AppHelperService } from '../app-helper.service';
 
@@ -17,9 +17,11 @@ export class HomeComponent implements OnInit {
     sheetName : ''
   };
   testId = '';
+  tempSheetName = '';
 
   wptLinkForm = new FormGroup({
-    wptLink : new FormControl('')
+    wptTestid : new FormControl('', Validators.required),
+    sheetName : new FormControl('', Validators.required)
   })
   constructor(private apphelper : AppHelperService) { }
 
@@ -27,8 +29,11 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log('entered link', this.wptLinkForm.value.wptLink);
-    this.fetchJSON(this.wptLinkForm.value.wptLink)
+    console.log('entered link', this.wptLinkForm.value.wptTestid);
+    console.log('sheetName', this.wptLinkForm.value.sheetName );
+    
+    let testUrl = `https://www.webpagetest.org/jsonResult.php?test=${this.wptLinkForm.value.wptTestid}`;  
+    this.fetchJSON(testUrl)
   }
 
   async  fetchJSON(url) {
@@ -39,12 +44,15 @@ export class HomeComponent implements OnInit {
 
   startAnalysis(jsonResult){
    this.testId = jsonResult.data.id;
+   this.tempSheetName = jsonResult.data.location
     Object.keys(jsonResult.data.runs).forEach(key =>{
       
-     
+      
       const fvStepsArray =  jsonResult.data.runs[key].firstView.steps;
-    
-      fvStepsArray.forEach((array)=>{
+      const rvStepsArray =  jsonResult.data.runs[key].repeatView.steps
+
+      const StepsArray = fvStepsArray.concat(rvStepsArray);
+      StepsArray.forEach((array)=>{
         this.resultData = {run : '', step: '', label: '', loadtime: '', thumbnailUrl: '', miss : false};
         this.resultData.run = array.run
         this.resultData.step =array.step
@@ -97,10 +105,15 @@ export class HomeComponent implements OnInit {
     })
     console.log(this.arrayResult);
     this.requestData.data = this.arrayResult;
-    this.requestData.sheetName = 'MyTest'
+    this.requestData.sheetName = `${this.wptLinkForm.value.sheetName}`
     console.log(this.requestData);
     console.log(JSON.stringify(this.requestData));
-    this.apphelper.postResultData(this.requestData);
+    this.apphelper.postResultData(this.requestData).subscribe();
+   this.arrayResult = [];
+    this.requestData = {
+      data : [],
+      sheetName : ''
+    };
   }
 
   createThumbnailUrl(run: any, step: any) {

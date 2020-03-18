@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +13,13 @@ export class AppHelperService {
 
   httpOptions = {
     headers: new HttpHeaders({
-     'Content-Type':  'application/json'})};
+     'Content-Type':  'application/json',
+     'responseType': 'text' })};
+     
 
+     postResultData(resultData): Observable<any>{ 
 
-     postResultData(resultData){
-       return this.http.post(this.baseUrl, resultData, this.httpOptions);
+       return this.http.post<any>(this.baseUrl, resultData, this.httpOptions);
      }
+
 }

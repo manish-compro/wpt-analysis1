@@ -1,0 +1,5 @@
+{
+    "default":{
+        "allowedCORSDomains": ["http://localhost:4200","http://comprotms.herokuapp.com"]
+    }
+}

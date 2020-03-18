@@ -3,9 +3,13 @@
 
   <form class="mt-5" [formGroup]="wptLinkForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
-      <label for="exampleInputEmail1">WPT-link</label>
-      <input type="url" class="form-control" id="wpt-link" aria-describedby="wpt-link" formControlName="wptLink">
-      <small id="urlHelp" class="form-text text-muted">Please provide the wpt json result url.</small>
+      <label for="exampleInputEmail1">WPT TEST-ID</label>
+      <input type="url" class="form-control" id="wpt-testid" aria-describedby="wpt-testid" formControlName="wptTestid">
+      <small id="urlHelp" class="form-text text-muted">Please provide test id.</small>
+
+      <label class="mt-3" for="sheetName">Sheet Name</label>
+      <input type="name" class="form-control" id="sheetName" aria-describedby="sheetName" formControlName="sheetName">
+      <small id="sheetNameHelp" class="form-text text-muted">Please provide sheet name.</small>
     </div>
     <button type="submit" [disabled]="!wptLinkForm.valid" class="btn btn-primary">Submit</button>
   </form>
